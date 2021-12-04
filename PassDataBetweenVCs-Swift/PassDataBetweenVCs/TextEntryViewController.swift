@@ -17,7 +17,7 @@ class TextEntryViewController: UIViewController {
         return field
     }()
     
-    // Create an optional closure/completion handler to pass user input text back
+    /// Create an optional closure/completion handler to pass user input text back
     public var completion: ((String?) -> Void)?
         
     override func viewDidLoad() {
@@ -27,11 +27,14 @@ class TextEntryViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(didTapDoneButton))
         view.addSubview(field)
         field.frame = CGRect(x: 20, y: 100, width: view.frame.size.width - 40, height: 55)
+        /// Note: we need to make this VC the first responder, so that when it's loaded, the cursor will move to the text box automatically
         field.becomeFirstResponder()
     }
     
     @objc private func didTapDoneButton() {
         completion?(field.text)
+        
+        /// Close  VC when click on Done Button
         dismiss(animated: true, completion: nil)
     }
     
