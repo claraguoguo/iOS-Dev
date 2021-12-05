@@ -15,7 +15,9 @@ class SecondViewController: UIViewController {
         label.text = "Name: -"
         return label
     }()
-
+    
+    var observer: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
@@ -36,6 +38,18 @@ class SecondViewController: UIViewController {
             That's why we need to use @objc to declare function.
          */
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        
+        observer = NotificationCenter.default.addObserver(forName: Notification.Name("myCustom"), object: nil, queue: .main, using: { notification in
+            
+            guard let object = notification.object as? [String: UIColor] else {
+                return
+            }
+            
+            guard let color = object["color"] else {
+                return
+            }
+            self.view.backgroundColor = color
+        })
     }
     
     @objc private func didTapButton() {

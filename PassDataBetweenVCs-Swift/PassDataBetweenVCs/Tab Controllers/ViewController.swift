@@ -8,9 +8,9 @@
 import UIKit
 
 /*
- 1. Custom init
- 2. Completion handler (closure)
- 3. NotificationCenter post
+ 1. Custom init -> ViewController
+ 2. Completion handler (closure) -> SecondViewController 
+ 3. NotificationCenter post -> ThirdViewController
  */
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -28,6 +28,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         ["one", "two", "three", "four"],
         ["China", "Canada", "USA", "UK"]
     ]
+    
+    var observer: NSObjectProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +37,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         tableView.frame = view.bounds
+        
+        
+        /*
+         Have an observer of type: NSObjectProtocol to listen to the Notification with name "myCustom". Once a notificaiton is received, it will be unwrapped and casted into a dictionary of format {String: UIColor} (i.e. ["color": UIColor.red]). The UIColor will be read and set as the background color of current controller. 
+         */
+        observer = NotificationCenter.default.addObserver(forName: Notification.Name("myCustom"), object: nil, queue: .main, using: { notification in
+            
+            guard let object = notification.object as? [String: UIColor] else {
+                return
+            }
+            
+            guard let color = object["color"] else {
+                return
+            }
+            self.view.backgroundColor = color
+            self.tableView.isHidden = true
+        })
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
