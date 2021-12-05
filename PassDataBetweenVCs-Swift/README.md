@@ -1,5 +1,7 @@
 # PassDataBetweenVCs-Swift
 
+### Features
+
 This project demonstrates 3 different ways of passing data between view controllers:
 1. custom initializer: 
 
@@ -15,8 +17,8 @@ This project demonstrates 3 different ways of passing data between view controll
 
 ### Best Practices
 
-* **custom initializers** is the most popular/common approach if certain information is required by a controller
-* **completion handlers** is often used when you have asynchronous tasks (i.e. user needs to do some work on another controller and you need to get the results back).
+* **custom initializer** is the most popular/common approach if certain information is required by a controller
+* **completion handler** is often used when you have asynchronous tasks (i.e. user needs to do some work on another controller and you need to get the results back).
 * **notification** should be only used in the case where a message needs to be passed to **multiple** observers, not just one.
 
 ### Reference
